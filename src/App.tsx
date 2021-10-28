@@ -17,21 +17,6 @@ type NewMenuItem = {
   price: number | null;
 };
 
-const initialMenu: MenuItem[] = [
-  {
-    id: 1,
-    name: "Chicken Tikka Masala",
-    description: "Rich curry Chicken. You'll LOVE it!",
-    price: 17,
-  },
-  {
-    id: 2,
-    name: "BBQ Ribs",
-    description: "Meaty and tender",
-    price: 24,
-  },
-];
-
 const initialNewMenuItem: NewMenuItem = {
   name: "",
   description: "",
@@ -39,7 +24,7 @@ const initialNewMenuItem: NewMenuItem = {
 };
 
 export function App() {
-  const [menu, setMenu] = useState(initialMenu);
+  const [menu, setMenu] = useState<MenuItem[]>([]);
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
 
   function onChange(
