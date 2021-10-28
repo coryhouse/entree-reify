@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./App.module.scss";
 import { Input } from "./Input";
 
@@ -9,6 +9,12 @@ type MenuItem = {
   name: string;
   description: string;
   price: number;
+};
+
+type NewMenuItem = {
+  name: string;
+  description: string;
+  price: number | null;
 };
 
 const menu: MenuItem[] = [
@@ -26,16 +32,47 @@ const menu: MenuItem[] = [
   },
 ];
 
+const initialNewMenuItem: NewMenuItem = {
+  name: "",
+  description: "",
+  price: null,
+};
+
 export function App() {
+  const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
+
+  function onChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const newMenuItemCopy = { ...newMenuItem }; // Copying state via spread syntax. Note: Shallow copy
+    newMenuItemCopy.name = event.target.value;
+    setNewMenuItem(newMenuItemCopy);
+  }
+
   return (
     <>
       <h1>Entree</h1>
-      {/* Exercise 2: Use Input for all form fields, 
-      and enhance Input to also support textarea */}
       <form>
-        <Input id="name" label="Name" />
-        <Input id="description" label="Description" type="textarea" />
-        <Input id="price" label="Price" type="number" />
+        <Input
+          id="name"
+          label="Name"
+          value={newMenuItem.name}
+          onChange={onChange}
+        />
+        <Input
+          id="description"
+          label="Description"
+          type="textarea"
+          value={newMenuItem.description}
+          onChange={onChange}
+        />
+        <Input
+          id="price"
+          label="Price"
+          type="number"
+          value={newMenuItem.price?.toString() ?? ""}
+          onChange={onChange}
+        />
         <input type="submit" value="Save Menu Item" />
       </form>
 
