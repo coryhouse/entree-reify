@@ -54,3 +54,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 | style is a string                | style is an object           |
 | styles are lowercase             | styles are camelCased        |
 | Must specify unit of measurement | Pixel is implied for numbers |
+| Plain 'ol space                  | {" "}                        |

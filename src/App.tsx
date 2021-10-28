@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./App.module.scss";
 
 const brandColor = "blue";
 
@@ -27,13 +28,33 @@ const menu: MenuItem[] = [
 export function App() {
   return (
     <>
-      {/* Example comment */}
-      <h1 style={{ color: brandColor, paddingBottom: "10px" }}>Entree</h1>
-      <ul>
-        {menu.map((menuItem) => (
-          <li key={menuItem.id}>{menuItem.name}</li>
-        ))}
-      </ul>
+      <h1>Entree</h1>
+
+      <form>
+        <div>
+          <label htmlFor="name">Name</label>
+          <br />
+          <input type="text" id="name" />
+        </div>
+        <div>
+          <label htmlFor="description">Description</label>
+          <br />
+          <textarea id="description" />
+        </div>
+        <div>
+          <label htmlFor="price">Price</label>
+          <br />
+          <input type="number" id="price" />
+        </div>
+        <input type="submit" value="Save Menu Item" />
+      </form>
+
+      {menu.map((menuItem) => (
+        <div className={styles.card} key={menuItem.id}>
+          <h2>{menuItem.name}</h2> {menuItem.description}{" "}
+          <p>{menuItem.price}</p>
+        </div>
+      ))}
     </>
   );
 }
