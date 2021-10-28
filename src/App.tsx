@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./App.module.scss";
+import { Input } from "./Input";
 
 const brandColor = "blue";
 
@@ -29,13 +30,9 @@ export function App() {
   return (
     <>
       <h1>Entree</h1>
-
+      {/* Exercise 2: Use Input for all form fields */}
       <form>
-        <div>
-          <label htmlFor="name">Name</label>
-          <br />
-          <input type="text" id="name" />
-        </div>
+        <Input id="name" label="Name" />
         <div>
           <label htmlFor="description">Description</label>
           <br />
