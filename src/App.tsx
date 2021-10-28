@@ -49,7 +49,21 @@ export function App() {
     setNewMenuItem({ ...newMenuItem, [event.target.id]: event.target.value });
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {}
+  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // Exercise 3: Add newMenuItem to menu array.
+    // Extra credit: Notify the user that save worked.
+    event.preventDefault(); // Don't post back.
+    setMenu([
+      ...menu,
+      {
+        id: menu.length + 1, // HACK LOL
+        description: newMenuItem.description,
+        price: newMenuItem.price as number,
+        name: newMenuItem.name,
+      },
+    ]);
+    setNewMenuItem(initialNewMenuItem); // clear form after save
+  }
 
   return (
     <>
