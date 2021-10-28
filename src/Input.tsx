@@ -6,7 +6,7 @@ type InputProps = {
   label: string;
 
   /** Input type */
-  type?: "text" | "email" | "number" | "date";
+  type?: "text" | "email" | "number" | "date" | "textarea";
 };
 
 export function Input({ id, label, type = "text" }: InputProps) {
@@ -14,7 +14,11 @@ export function Input({ id, label, type = "text" }: InputProps) {
     <div>
       <label htmlFor={id}>{label}</label>
       <br />
-      <input type={type} id={id} />
+      {type === "textarea" ? (
+        <textarea id={id} />
+      ) : (
+        <input type={type} id={id} />
+      )}
     </div>
   );
 }

@@ -30,19 +30,12 @@ export function App() {
   return (
     <>
       <h1>Entree</h1>
-      {/* Exercise 2: Use Input for all form fields */}
+      {/* Exercise 2: Use Input for all form fields, 
+      and enhance Input to also support textarea */}
       <form>
         <Input id="name" label="Name" />
-        <div>
-          <label htmlFor="description">Description</label>
-          <br />
-          <textarea id="description" />
-        </div>
-        <div>
-          <label htmlFor="price">Price</label>
-          <br />
-          <input type="number" id="price" />
-        </div>
+        <Input id="description" label="Description" type="textarea" />
+        <Input id="price" label="Price" type="number" />
         <input type="submit" value="Save Menu Item" />
       </form>
 
