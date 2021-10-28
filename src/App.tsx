@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
+const brandColor = "blue";
+
+type MenuItem = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+};
+
+const menu: MenuItem[] = [
+  {
+    id: 1,
+    name: "Chicken Tikka Masala",
+    description: "Rich curry Chicken. You'll LOVE it!",
+    price: 17,
+  },
+  {
+    id: 2,
+    name: "BBQ Ribs",
+    description: "Meaty and tender",
+    price: 24,
+  },
+];
+
+export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* Example comment */}
+      <h1 style={{ color: brandColor, paddingBottom: "10px" }}>Entree</h1>
+      <ul>
+        {menu.map((menuItem) => (
+          <li key={menuItem.id}>{menuItem.name}</li>
+        ))}
+      </ul>
+    </>
   );
 }
-
-export default App;
