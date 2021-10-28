@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "id": 1,
+      "name": "Chicken Tikka Masala",
+      "description": "Rich curry Chicken. You'll LOVE it!",
+      "price": 17
+    },
+    {
+      "id": 2,
+      "name": "BBQ Ribs",
+      "description": "Meaty and tender",
+      "price": 24
+    }
+  ]
+}
