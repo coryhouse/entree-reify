@@ -44,9 +44,8 @@ export function App() {
   function onChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const newMenuItemCopy = { ...newMenuItem }; // Copying state via spread syntax. Note: Shallow copy
-    newMenuItemCopy.name = event.target.value;
-    setNewMenuItem(newMenuItemCopy);
+    // Using spread syntax here because React state should be treated as immutable.
+    setNewMenuItem({ ...newMenuItem, [event.target.id]: event.target.value });
   }
 
   return (
