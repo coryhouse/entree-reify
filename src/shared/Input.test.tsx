@@ -14,7 +14,8 @@ describe("Input", () => {
     render(
       <Input type="text" label="label" value="" id="id" onChange={() => {}} />
     );
-    screen.getByLabelText("label"); // Assertion is implied / built-in
+    const input = screen.getByLabelText("label"); // Assertion is implied / built-in
+    expect(input).toHaveAttribute("type", "text");
   });
 
   it('should render an textarea with an attached label when type="textarea"', () => {
@@ -27,6 +28,7 @@ describe("Input", () => {
         onChange={() => {}}
       />
     );
-    screen.getByLabelText("label"); // Assertion is implied / built-in
+    const textarea = screen.getByLabelText("label"); // Assertion is implied / built-in
+    expect(textarea).toBeInstanceOf(HTMLTextAreaElement);
   });
 });
