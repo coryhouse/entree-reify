@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import { addMenuItem } from "./api/menuApi";
 import { Input } from "./Input";
-
-type NewMenuItem = {
-  name: string;
-  description: string;
-  price: number | null;
-};
+import { NewMenuItem } from "./types";
+import { useHistory } from "react-router-dom";
 
 const initialNewMenuItem: NewMenuItem = {
   name: "",
@@ -14,6 +11,7 @@ const initialNewMenuItem: NewMenuItem = {
 };
 
 export function Admin() {
+  const history = useHistory();
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
 
   function onChange(
@@ -26,20 +24,11 @@ export function Admin() {
     });
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    // Exercise 3: Add newMenuItem to menu array.
-    // Extra credit: Notify the user that save worked.
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); // Don't post back.
-    // setMenu([
-    //   ...menu,
-    //   {
-    //     id: menu.length + 1, // HACK LOL
-    //     description: newMenuItem.description,
-    //     price: newMenuItem.price as number,
-    //     name: newMenuItem.name,
-    //   },
-    // ]);
-    setNewMenuItem(initialNewMenuItem); // clear form after save
+    await addMenuItem(newMenuItem);
+    // Redirect to home
+    history.push("/");
   }
 
   return (
