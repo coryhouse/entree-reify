@@ -3,6 +3,7 @@ import { Input } from "./Input";
 
 describe("Input", () => {
   it("should throw an error if id is empty", () => {
+    jest.spyOn(console, "error").mockImplementation(() => {});
     expect(() =>
       render(
         <Input type="text" label="label" value="" id="" onChange={() => {}} />
