@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styles from "./App.module.scss";
+import React, { useState } from "react";
 import { Input } from "./Input";
-import { getMenu } from "./api/menuApi";
-
-const brandColor = "blue";
-
-type MenuItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-};
+import { Route } from "react-router-dom";
+import { Home } from "./Home";
+import { About } from "./About";
 
 type NewMenuItem = {
   name: string;
@@ -25,16 +17,7 @@ const initialNewMenuItem: NewMenuItem = {
 };
 
 export function App() {
-  const [menu, setMenu] = useState<MenuItem[]>([]);
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
-
-  useEffect(() => {
-    async function fetchMenu() {
-      const _menu = await getMenu();
-      setMenu(_menu);
-    }
-    fetchMenu();
-  }, []); // Dependency array. So empty array means no deps. So only runs once.
 
   function onChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,20 +30,28 @@ export function App() {
     // Exercise 3: Add newMenuItem to menu array.
     // Extra credit: Notify the user that save worked.
     event.preventDefault(); // Don't post back.
-    setMenu([
-      ...menu,
-      {
-        id: menu.length + 1, // HACK LOL
-        description: newMenuItem.description,
-        price: newMenuItem.price as number,
-        name: newMenuItem.name,
-      },
-    ]);
+    // setMenu([
+    //   ...menu,
+    //   {
+    //     id: menu.length + 1, // HACK LOL
+    //     description: newMenuItem.description,
+    //     price: newMenuItem.price as number,
+    //     name: newMenuItem.name,
+    //   },
+    // ]);
     setNewMenuItem(initialNewMenuItem); // clear form after save
   }
 
   return (
     <>
+      <Route path="/" exact>
+        <Home />
+      </Route>
+
+      <Route path="/about">
+        <About />
+      </Route>
+
       <h1>Entree</h1>
       <form onSubmit={onSubmit}>
         <Input
@@ -85,13 +76,6 @@ export function App() {
         />
         <input type="submit" value="Save Menu Item" />
       </form>
-
-      {menu.map((menuItem) => (
-        <div className={styles.card} key={menuItem.id}>
-          <h2>{menuItem.name}</h2> {menuItem.description}{" "}
-          <p>{menuItem.price}</p>
-        </div>
-      ))}
     </>
   );
 }
