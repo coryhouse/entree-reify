@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
 import { Input } from "./Input";
+import { getMenu } from "./api/menuApi";
 
 const brandColor = "blue";
 
@@ -26,6 +27,14 @@ const initialNewMenuItem: NewMenuItem = {
 export function App() {
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
+
+  useEffect(() => {
+    async function fetchMenu() {
+      const _menu = await getMenu();
+      setMenu(_menu);
+    }
+    fetchMenu();
+  }, []); // Dependency array. So empty array means no deps. So only runs once.
 
   function onChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
