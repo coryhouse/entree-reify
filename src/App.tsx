@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import { Home } from "./Home";
 import { About } from "./About";
 import { Admin } from "./Admin";
@@ -8,6 +8,19 @@ export function App() {
   // on all pages.
   return (
     <>
+      <nav aria-label="Main">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+        </ul>
+      </nav>
       <Route path="/" exact>
         <Home />
       </Route>
