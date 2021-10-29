@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { addMenuItem } from "./api/menuApi";
-import { Input } from "./Input";
+import { Input } from "./shared/Input";
 import { NewMenuItem } from "./types";
 import { useHistory } from "react-router-dom";
 

@@ -26,6 +26,7 @@ export function Input({
   value,
   onChange,
 }: InputProps) {
+  if (!id) throw new Error("ID must be populated.");
   return (
     <div>
       <label htmlFor={id}>{label}</label>
