@@ -25,7 +25,7 @@ export function Home() {
       <h1>Menu</h1>
 
       {/* Derived state */}
-      <p>{menu.length + " Items found."}</p>
+      <p>{menu.length} Items found.</p>
 
       {menu.map((menuItem) => (
         <div className={styles.card} key={menuItem.id}>
