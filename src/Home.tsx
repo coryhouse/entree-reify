@@ -20,12 +20,15 @@ export function Home() {
     fetchMenu();
   }, []); // Dependency array. So empty array means no deps. So only runs once.
 
+  // if (menu.length === 0) return <p>Loading...</p>;
+
   return (
     <>
       <h1>Menu</h1>
 
       {/* Derived state */}
-      <p>{menu.length} Items found.</p>
+      {/** Exercise 2: Show a loading message until data is available */}
+      {menu.length === 0 ? "Loading..." : <p>{menu.length} Items found.</p>}
 
       {menu.map((menuItem) => (
         <div className={styles.card} key={menuItem.id}>
