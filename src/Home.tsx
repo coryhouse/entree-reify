@@ -1,25 +1,11 @@
-import { useEffect, useState } from "react";
-import { getMenu } from "./api/menuApi";
 import styles from "./Home.module.scss";
+import { MenuItem } from "./types";
 
-type MenuItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
+type HomeProps = {
+  menu: MenuItem[];
 };
 
-export function Home() {
-  const [menu, setMenu] = useState<MenuItem[]>([]);
-
-  useEffect(() => {
-    async function fetchMenu() {
-      const _menu = await getMenu();
-      setMenu(_menu);
-    }
-    fetchMenu();
-  }, []); // Dependency array. So empty array means no deps. So only runs once.
-
+export function Home({ menu }: HomeProps) {
   // if (menu.length === 0) return <p>Loading...</p>;
 
   return (

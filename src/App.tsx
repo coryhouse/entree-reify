@@ -1,10 +1,23 @@
+import { useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
 import { Home } from "./Home";
 import { About } from "./About";
 import { Admin } from "./Admin";
 import { ErrorBoundary } from "react-error-boundary";
+import { getMenu } from "./api/menuApi";
+import { MenuItem } from "./types";
 
 export function App() {
+  const [menu, setMenu] = useState<MenuItem[]>([]);
+
+  useEffect(() => {
+    async function fetchMenu() {
+      const _menu = await getMenu();
+      setMenu(_menu);
+    }
+    fetchMenu();
+  }, []); // Dependency array. So empty array means no deps. So only runs once.
+
   // Exercise 1: Create nav bar that displays
   // on all pages.
   return (
@@ -23,12 +36,12 @@ export function App() {
         </ul>
       </nav>
       <Route path="/" exact>
-        <Home />
+        <Home menu={menu} />
       </Route>
 
       <Route path="/admin">
         <ErrorBoundary fallback={<>Sorry, an error occurred. 🤦‍♂️</>}>
-          <Admin />
+          <Admin menu={menu} />
         </ErrorBoundary>
       </Route>
 
