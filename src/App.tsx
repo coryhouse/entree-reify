@@ -2,6 +2,7 @@ import { Route, Link } from "react-router-dom";
 import { Home } from "./Home";
 import { About } from "./About";
 import { Admin } from "./Admin";
+import { ErrorBoundary } from "react-error-boundary";
 
 export function App() {
   // Exercise 1: Create nav bar that displays
@@ -26,7 +27,9 @@ export function App() {
       </Route>
 
       <Route path="/admin">
-        <Admin />
+        <ErrorBoundary fallback={<>Sorry, an error occurred. 🤦‍♂️</>}>
+          <Admin />
+        </ErrorBoundary>
       </Route>
 
       <Route path="/about">
