@@ -3,12 +3,13 @@ import { Home } from "./Home";
 import { About } from "./About";
 import { Admin } from "./Admin";
 import { ErrorBoundary } from "react-error-boundary";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export function App() {
-  // Exercise 1: Create nav bar that displays
-  // on all pages.
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <nav aria-label="Main">
         <ul>
           <li>
@@ -35,6 +36,6 @@ export function App() {
       <Route path="/about">
         <About />
       </Route>
-    </>
+    </QueryClientProvider>
   );
 }
