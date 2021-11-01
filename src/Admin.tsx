@@ -16,9 +16,16 @@ type Error = {
   price: string;
 };
 
+type Status = "Idle" | "Saving" | "Submitted";
+
 export function Admin() {
   const history = useHistory();
+  const [status, setStatus] = useState<Status>("Idle");
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
+
+  // Derived state - Calculated on each render
+  const errors = validate();
+  const valid = Object.values(errors).every((v) => !v);
 
   function validate(): Error {
     const error: Error = {
@@ -42,12 +49,13 @@ export function Admin() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); // Don't post back.
+    setStatus("Submitted");
+    if (!valid) return;
+    setStatus("Saving");
     await addMenuItem(newMenuItem);
     // Redirect to home
     history.push("/");
   }
-
-  const errors = validate();
 
   return (
     <>
@@ -60,7 +68,7 @@ export function Admin() {
           label="Name"
           value={newMenuItem.name}
           onChange={onChange}
-          error={errors.name}
+          error={status !== "Idle" && errors.name ? errors.name : ""}
         />
         <Input
           id="description"
@@ -78,7 +86,11 @@ export function Admin() {
           onChange={onChange}
           error={errors.price}
         />
-        <input type="submit" value="Save Menu Item" />
+        <input
+          type="submit"
+          value="Save Menu Item"
+          disabled={status === "Saving"}
+        />
       </form>
     </>
   );
