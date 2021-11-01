@@ -6,9 +6,11 @@ import { Admin } from "./Admin";
 import { ErrorBoundary } from "react-error-boundary";
 import { getMenu } from "./api/menuApi";
 import { MenuItem } from "./types";
+import { useWindowWidth } from "./hooks/useWindowWidth";
 
 export function App() {
   const [menu, setMenu] = useState<MenuItem[]>([]);
+  const windowWidth = useWindowWidth();
 
   useEffect(() => {
     async function fetchMenu() {
@@ -22,6 +24,7 @@ export function App() {
   // on all pages.
   return (
     <>
+      Window width: {windowWidth}
       <nav aria-label="Main">
         <ul>
           <li>
@@ -38,13 +41,11 @@ export function App() {
       <Route path="/" exact>
         <Home menu={menu} />
       </Route>
-
       <Route path="/admin">
         <ErrorBoundary fallback={<>Sorry, an error occurred. 🤦‍♂️</>}>
           <Admin menu={menu} />
         </ErrorBoundary>
       </Route>
-
       <Route path="/about">
         <About />
       </Route>
