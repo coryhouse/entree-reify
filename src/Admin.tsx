@@ -10,9 +10,25 @@ const initialNewMenuItem: NewMenuItem = {
   price: null,
 };
 
+type Error = {
+  name: string;
+  description: string;
+  price: string;
+};
+
 export function Admin() {
   const history = useHistory();
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
+
+  function validate(): Error {
+    const error: Error = {
+      name: "",
+      description: "",
+      price: "",
+    };
+    if (!newMenuItem.name) error.name = "Name is required.";
+    return error;
+  }
 
   function onChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -31,6 +47,8 @@ export function Admin() {
     history.push("/");
   }
 
+  const errors = validate();
+
   return (
     <>
       <h1>Entree Admin</h1>
@@ -42,6 +60,7 @@ export function Admin() {
           label="Name"
           value={newMenuItem.name}
           onChange={onChange}
+          error={errors.name}
         />
         <Input
           id="description"
@@ -49,6 +68,7 @@ export function Admin() {
           type="textarea"
           value={newMenuItem.description}
           onChange={onChange}
+          error={errors.description}
         />
         <Input
           id="price"
@@ -56,6 +76,7 @@ export function Admin() {
           type="number"
           value={newMenuItem.price?.toString() ?? ""}
           onChange={onChange}
+          error={errors.price}
         />
         <input type="submit" value="Save Menu Item" />
       </form>
