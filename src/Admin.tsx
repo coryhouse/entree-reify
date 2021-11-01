@@ -34,6 +34,15 @@ export function Admin() {
       price: "",
     };
     if (!newMenuItem.name) error.name = "Name is required.";
+
+    if (!newMenuItem.description)
+      error.description = "Description is required.";
+
+    if (!newMenuItem.price) error.price = "Price is required.";
+
+    if (newMenuItem.price == 0)
+      error.price = "Price must be greater than zero.";
+
     return error;
   }
 
@@ -76,7 +85,9 @@ export function Admin() {
           type="textarea"
           value={newMenuItem.description}
           onChange={onChange}
-          error={errors.description}
+          error={
+            status !== "Idle" && errors.description ? errors.description : ""
+          }
         />
         <Input
           id="price"
@@ -84,7 +95,7 @@ export function Admin() {
           type="number"
           value={newMenuItem.price?.toString() ?? ""}
           onChange={onChange}
-          error={errors.price}
+          error={status !== "Idle" && errors.price ? errors.price : ""}
         />
         <input
           type="submit"
