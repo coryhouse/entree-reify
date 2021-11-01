@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addMenuItem } from "./api/menuApi";
 import { Input } from "./shared/Input";
-import { NewMenuItem } from "./types";
+import { MenuItem, NewMenuItem } from "./types";
 import { useHistory } from "react-router-dom";
 
 const initialNewMenuItem: NewMenuItem = {
@@ -18,7 +18,11 @@ type AdminError = {
 
 type Status = "Idle" | "Saving" | "Submitted";
 
-export function Admin() {
+type AdminProps = {
+  menu: MenuItem[];
+};
+
+export function Admin({ menu }: AdminProps) {
   const history = useHistory();
   const [status, setStatus] = useState<Status>("Idle");
   const [saveError, setSaveError] = useState<Error | null>(null);
@@ -36,6 +40,10 @@ export function Admin() {
     };
 
     if (!newMenuItem.name) error.name = "Name is required.";
+
+    if (menu.find((m) => m.name === newMenuItem.name)) {
+      error.name = "That menu item already exists.";
+    }
 
     if (!newMenuItem.description)
       error.description = "Description is required.";
