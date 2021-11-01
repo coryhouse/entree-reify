@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { getMenu } from "./api/menuApi";
 import styles from "./Home.module.scss";
 
@@ -10,15 +10,7 @@ type MenuItem = {
 };
 
 export function Home() {
-  const [menu, setMenu] = useState<MenuItem[]>([]);
-
-  useEffect(() => {
-    async function fetchMenu() {
-      const _menu = await getMenu();
-      setMenu(_menu);
-    }
-    fetchMenu();
-  }, []); // Dependency array. So empty array means no deps. So only runs once.
+  const menuQuery = useQuery<MenuItem[]>("menu", getMenu);
 
   // if (menu.length === 0) return <p>Loading...</p>;
 
@@ -28,9 +20,13 @@ export function Home() {
 
       {/* Derived state */}
       {/** Exercise 2: Show a loading message until data is available */}
-      {menu.length === 0 ? "Loading..." : <p>{menu.length} Items found.</p>}
+      {menuQuery.isLoading ? (
+        "Loading..."
+      ) : (
+        <p>{menuQuery.data?.length} Items found.</p>
+      )}
 
-      {menu.map((menuItem) => (
+      {menuQuery.data?.map((menuItem) => (
         <div className={styles.card} key={menuItem.id}>
           <h2>{menuItem.name}</h2> {menuItem.description}{" "}
           <p>{menuItem.price}</p>

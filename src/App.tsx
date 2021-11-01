@@ -4,6 +4,7 @@ import { About } from "./About";
 import { Admin } from "./Admin";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 export function App() {
   const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ export function App() {
       <Route path="/about">
         <About />
       </Route>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
