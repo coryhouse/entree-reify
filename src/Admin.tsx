@@ -65,11 +65,11 @@ export function Admin() {
     setStatus("Saving");
     try {
       await addMenuItem(newMenuItem);
+      // Redirect to home
+      history.push("/");
     } catch (err: unknown) {
       setSaveError(err as Error);
     }
-    // Redirect to home
-    history.push("/");
   }
 
   if (saveError) throw saveError;
