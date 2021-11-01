@@ -10,7 +10,7 @@ const initialNewMenuItem: NewMenuItem = {
   price: null,
 };
 
-type Error = {
+type AdminError = {
   name: string;
   description: string;
   price: string;
@@ -21,18 +21,20 @@ type Status = "Idle" | "Saving" | "Submitted";
 export function Admin() {
   const history = useHistory();
   const [status, setStatus] = useState<Status>("Idle");
+  const [saveError, setSaveError] = useState<Error | null>(null);
   const [newMenuItem, setNewMenuItem] = useState(initialNewMenuItem);
 
   // Derived state - Calculated on each render
   const errors = validate();
   const valid = Object.values(errors).every((v) => !v);
 
-  function validate(): Error {
-    const error: Error = {
+  function validate(): AdminError {
+    const error: AdminError = {
       name: "",
       description: "",
       price: "",
     };
+
     if (!newMenuItem.name) error.name = "Name is required.";
 
     if (!newMenuItem.description)
@@ -61,10 +63,16 @@ export function Admin() {
     setStatus("Submitted");
     if (!valid) return;
     setStatus("Saving");
-    await addMenuItem(newMenuItem);
+    try {
+      await addMenuItem(newMenuItem);
+    } catch (err: unknown) {
+      setSaveError(err as Error);
+    }
     // Redirect to home
     history.push("/");
   }
+
+  if (saveError) throw saveError;
 
   return (
     <>
